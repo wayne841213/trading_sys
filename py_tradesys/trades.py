@@ -1,6 +1,8 @@
 from datetime import datetime, time, timezone
 from typing import Dict, List, Optional, Union
 
+import pandas as pd
+
 
 class Trades:
     def __init__(self):
