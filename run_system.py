@@ -12,8 +12,8 @@ from py_tradesys.indicators import Indicators
 from py_tradesys.tradecenter import Tradecenter
 
 # grab the config file value
-config = ConfigParser()
-config.read("configs/configs.ini")
+# config = ConfigParser()
+# config.read("configs/configs.ini")
 
 CLIENT_ID = config.get("main", "CLIENT_ID")
 REDIRECT_URL = config.get("main", "REDIRECT_URL")
@@ -60,3 +60,28 @@ new_positions = trade_system.portfolio.add_positions(positions=multi_position)
 pprint.pprint(new_positions)
 
 print(new_positions)
+
+# add a single positions to the portfolio
+
+trade_system.portfolio.add_position(
+    symbol="MSFT", quantity="10", asset_type="equity", purchase_date="2021-07-29"
+)
+pprint.pprint(trade_system.portfolio.positions)
+
+# check to see if the pre market is open
+
+if trade_system.regular_market_open:
+    print("Pre Market Open")
+else:
+    print("Pre Market is not Open")
+
+# check to see if the post market is open
+
+if trade_system.post_market_open:
+    print("Post Market Open")
+else:
+    print("Post Market is not Open")
+
+# grab the current quote in our portfolio
+current_quote = Tradecenter.grab_current_quotes()
+pprint.pprint(current_quote)
