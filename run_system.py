@@ -12,8 +12,8 @@ from py_tradesys.indicators import Indicators
 from py_tradesys.tradecenter import Tradecenter
 
 # grab the config file value
-# config = ConfigParser()
-# config.read("configs/configs.ini")
+config = ConfigParser()
+config.read("configs/configs.ini")
 
 CLIENT_ID = config.get("main", "CLIENT_ID")
 REDIRECT_URL = config.get("main", "REDIRECT_URL")
@@ -83,5 +83,6 @@ else:
     print("Post Market is not Open")
 
 # grab the current quote in our portfolio
-current_quote = Tradecenter.grab_current_quotes()
+
+current_quote = trade_system.grab_current_quotes()
 pprint.pprint(current_quote)
