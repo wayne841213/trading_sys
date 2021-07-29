@@ -5,7 +5,7 @@ from typing import Dict, List, Union
 import pandas as pd
 from td.client import TDClient
 
-from py_tradesys.portfolio import Portfolio
+from portfolio import Portfolio
 
 # from td.utils import milliseconds_since_epoch  # issue to be solve
 
