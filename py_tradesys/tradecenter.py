@@ -10,6 +10,7 @@ from py_tradesys.portfolio import Portfolio
 # from td.utils import milliseconds_since_epoch  # issue to be solve
 
 
+# paper trading = mock trading
 class Tradecenter:
     def __init__(
         self,
@@ -17,7 +18,7 @@ class Tradecenter:
         redirect_uri: str,
         credentials_path: str = None,
         trading_account: str = None,
-        paper_trading: bool = True,  # paper trading = mock trading
+        paper_trading: bool = True,
     ) -> None:
 
         self.trading_account: str = trading_account

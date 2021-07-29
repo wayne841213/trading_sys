@@ -85,4 +85,4 @@ else:
 # grab the current quote in our portfolio
 
 current_quote = trade_system.grab_current_quotes()
-pprint.pprint(current_quote)
+# pprint.pprint(current_quote)
