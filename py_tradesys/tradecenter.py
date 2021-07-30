@@ -48,7 +48,7 @@ class Tradecenter:
         return td_client
 
     @property
-    def pre_market_open(self):
+    def pre_market_open(self) -> bool:
 
         # whether the market open
 
@@ -66,7 +66,7 @@ class Tradecenter:
             return False
 
     @property
-    def post_market_open(self):
+    def post_market_open(self) -> bool:
 
         # holiday
         post_market_end_time = (
