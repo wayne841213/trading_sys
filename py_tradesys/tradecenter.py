@@ -8,6 +8,7 @@ from td.utils import TDUtilities
 
 from py_tradesys.asset import StockFrame
 from py_tradesys.portfolio import Portfolio
+from py_tradesys.trades import Trades
 
 milliseconds_since_epoch = TDUtilities().milliseconds_since_epoch
 
@@ -96,8 +97,35 @@ class Tradecenter:
 
         return self.portfolio
 
-    def create_trade(self):
-        pass
+    # important!
+    def create_trade(
+        self,
+        trade_id: str,
+        enter_or_exit: str,
+        long_or_short: str,
+        order_type: str = "mkt",
+        price: float = 0.0,
+        stop_limit_price: float = 0.0,
+    ) -> Trades:
+
+        # initialize a new trade object
+
+        trade = Trades()
+
+        # create a new trade
+
+        trade.new_trade(
+            trade_id=trade_id,
+            order_type=order_type,
+            enter_or_exit=enter_or_exit,
+            side=long_or_short,
+            price=price,
+            stop_limit_price=stop_limit_price,
+        )
+
+        self.trades[trade_id] = trade
+
+        return trade
 
     def grab_current_quotes(self) -> dict:
         # grab all the quote in the portfolio
