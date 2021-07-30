@@ -21,7 +21,7 @@ class Portfolio:
         purchase_date: Optional[str],
         quantity: int = 0,
         purchase_price: float = 0.0,
-    ):
+    ) -> dict:
         self.positions[symbol] = {}
         self.positions[symbol]["symbol"] = symbol
         self.positions[symbol]["quantity"] = quantity
@@ -31,7 +31,7 @@ class Portfolio:
 
         return self.positions
 
-    def add_positions(self, positions: List[Dict]):
+    def add_positions(self, positions: List[dict]) -> dict:
 
         if isinstance(positions, list):
 
@@ -50,7 +50,7 @@ class Portfolio:
         else:
             raise TypeError("Positions must be a dict")
 
-    def remove_position(self, symbol: str):
+    def remove_position(self, symbol: str) -> Tuple[bool, str]:
 
         if symbol in self.positions:
             del self.positions[symbol]
@@ -69,7 +69,7 @@ class Portfolio:
         return self._td_client
 
     @td_client.setter  # after a property name @ + .setter
-    def td_client(self, td_client: TDClient):
+    def td_client(self, td_client: TDClient) -> None:
         """set the TDClient object for the portfolio
 
         Args:
@@ -91,7 +91,7 @@ class Portfolio:
         else:
             return False
 
-    def is_profitable(self, symbol: str, current_price: float):
+    def is_profitable(self, symbol: str, current_price: float) -> bool:
 
         # take the purchase price
         purchase_price = self.positions[symbol]["purchase_price"]
