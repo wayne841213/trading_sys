@@ -9,21 +9,23 @@ from asset_class import StockFrame
 
 
 class Indicators:
-    def __init__(self, price_data_frame: StockFrame):
+    def __init__(self, price_data_frame: StockFrame) -> None:
 
         self._stock_frame: StockFrame = price_data_frame
         self._price_groups = self._stock_frame.symbol_groups
         self._current_indicators = {}
         self._indicator_signals = {}
-        self._frame = self._stock_frame.frame
+        self.__frame = self._stock_frame.frame
 
-    # buy and sell threshod for float
-    # for example
-    # RSI > 90.0 then buy, RSI < 10.0 then sell
+        """
+        buy and sell threshod for float
+        for example
+        RSI > 90.0 then buy, RSI < 10.0 then sell
+        """
 
     def set_indicator_signals(
         self, indicator: str, buy: float, sell: float, condition_buy: Any, condition_sell: Any
-    ):
+    ) -> None:
 
         # if there is no signal for that indicator set a template
         if indicator not in self._indicator_signals:
@@ -35,7 +37,7 @@ class Indicators:
         self._indicator_signals[indicator]["buy_operator"] = condition_buy
         self._indicator_signals[indicator]["sell_operator"] = condition_sell
 
-    def get_indicator_signals(self, indicator: Optional[str]):
+    def get_indicator_signals(self, indicator: Optional[str]) -> Dict:
 
         if indicator and indicator in self._indicator_signals:
             return self._indicator_signals[indicator]
@@ -49,7 +51,7 @@ class Indicators:
         return self._frame
 
     @price_data_frame.setter
-    def price_data_frame(self, price_data_frame: pd.DataFrame):
+    def price_data_frame(self, price_data_frame: pd.DataFrame) -> None:
 
         self._frame = price_data_frame
 
@@ -57,7 +59,7 @@ class Indicators:
 
     # ROC indicator
 
-    def change_in_price(self):
+    def change_in_price(self) -> pd.DataFrame:
 
         locals_data = locals()
         del locals_data["self"]
@@ -73,7 +75,7 @@ class Indicators:
         self._frame[column_name] = self._price_groups["close"].transform(lambda x: x.diff())
 
     # RSI
-    def rsi(self, period: int, method: str = "wilders"):
+    def rsi(self, period: int, method: str = "wilders") -> pd.DataFrame:
 
         locals_data = locals()
         del locals_data["self"]
@@ -123,7 +125,7 @@ class Indicators:
 
     # SMA
 
-    def sma(self, period: int):
+    def sma(self, period: int) -> pd.DataFrame:
 
         locals_data = locals()
         del locals_data["self"]
@@ -142,7 +144,7 @@ class Indicators:
 
     # EMA
 
-    def ema(self, period: int, alpha: float = 0.0):
+    def ema(self, period: int, alpha: float = 0.0) -> pd.DataFrame:
 
         locals_data = locals()
         del locals_data["self"]

@@ -27,7 +27,7 @@ class Trades:
         enter_or_exit: str,
         price: float = 0.00,
         stop_limit_price: float = 0.00,
-    ):
+    ) -> dict:
 
         self.trade_id = trade_id
 
@@ -106,7 +106,7 @@ class Trades:
         asset_type: str,
         sub_asset_type: str = None,
         order_leg_id: int = 0,
-    ):
+    ) -> dict:
 
         leg = self.order["orderLegCollection"][order_leg_id]
 
@@ -120,12 +120,12 @@ class Trades:
 
         return leg
 
-    def good_till_cancel(self, cancel_time: datetime):
+    def good_till_cancel(self, cancel_time: datetime) -> None:
 
         self.order["duration"] = "GOOD_TILL_CANCEL"
         self.order["cancelTime"] = cancel_time.isoformat()
 
-    def modify_side(self, side: Optional[str], order_leg_id: int = 0):
+    def modify_side(self, side: Optional[str], order_leg_id: int = 0) -> None:
 
         if side and side not in ["buy", "sell", "sell_short", "buy_to_cover"]:
             raise ValueError("You need a valid side!")
@@ -199,7 +199,7 @@ class Trades:
         limit_size: float,
         stop_percentage: bool = False,
         limit_percentage: bool = False,
-    ):
+    ) -> bool:
 
         if not self._triggered_added:
             self._convert_to_trigger()
@@ -254,7 +254,7 @@ class Trades:
 
         return True
 
-    def _calculate_new_price(self, price: float, adjustment: float, percentage: bool):
+    def _calculate_new_price(self, price: float, adjustment: float, percentage: bool) -> float:
 
         if percentage:
             new_price = price * adjustment
@@ -270,7 +270,7 @@ class Trades:
 
         return new_price
 
-    def add_take_profit(self, profit_size: float, percentage: bool = False):
+    def add_take_profit(self, profit_size: float, percentage: bool = False) -> bool:
 
         if not self._triggered_added:
             self._convert_to_trigger()
@@ -321,7 +321,7 @@ class Trades:
             self.order["childOrderStrategies"] = []
             self._triggered_added = True
 
-    def modify_session(self, session: str):
+    def modify_session(self, session: str) -> None:
 
         if session in ["am", "pm", "normal", "seamless"]:
             self.order["session"] = session.upper()
@@ -330,18 +330,18 @@ class Trades:
 
     # get the value
     @property
-    def order_response(self):
+    def order_response(self) -> dict:
         # saving the order the data -> the actual order you send to TD
 
         return self._order_response
 
     # set the value
     @order_response.setter
-    def order_response(self, order_response_dict: dict):
+    def order_response(self, order_response_dict: dict) -> None:
 
         self._order_response = order_response_dict
 
-    def _generate_order_id(self):
+    def _generate_order_id(self) -> str:
 
         if self.order:
 
@@ -365,7 +365,7 @@ class Trades:
         quantity: int,
         asset_type: str,
         sub_asset_type: str = None,
-    ):
+    ) -> List[Dict]:
 
         # define the leg
         leg = {}
@@ -393,7 +393,7 @@ class Trades:
         return self.order["orderLegCollection"]
 
     @property
-    def number_of_legs(self):
+    def number_of_legs(self) -> int:
 
         return len(self.order["oderLegCollection"])
 

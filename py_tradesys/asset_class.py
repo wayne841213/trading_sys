@@ -9,7 +9,7 @@ from pandas.core.window import RollingGroupby
 
 
 class StockFrame:
-    def __init__(self, data: List[Dict]):
+    def __init__(self, data: List[Dict]) -> None:
 
         self._data = data  # self.data?
         self._frame: pd.DataFrame = self.create_frame()
@@ -21,7 +21,7 @@ class StockFrame:
         return self._frame
 
     @property
-    def symbol_groups(self):
+    def symbol_groups(self) -> DataFrameGroupBy:
 
         self._symbol_groups = self._frame.groupby(
             by="symbol", as_index=False, sort=True  # Critical
@@ -37,7 +37,7 @@ class StockFrame:
 
         return self._symbol_rolling_groups
 
-    def create_frame(self):
+    def create_frame(self) -> pd.DataFrame:
 
         # make a data frame
 
@@ -47,13 +47,13 @@ class StockFrame:
 
         return price_df
 
-    def _parse_datetime_column(self, price_df: pd.DataFrame):
+    def _parse_datetime_column(self, price_df: pd.DataFrame) -> pd.DataFrame:
 
         price_df["datetime"] = pd.to_datetime(price_df["datetime"], unit="ms", origin="unix")
 
         return price_df
 
-    def _set_multi_index(self, price_df: pd.DataFrame):
+    def _set_multi_index(self, price_df: pd.DataFrame) -> pd.DataFrame:
 
         price_df = price_df.set_index(keys=["symbol", "datetime"])
 
@@ -89,10 +89,10 @@ class StockFrame:
             self.frame.loc[row_id, column_names] = new_row.values
             self.frame.sort_index(inplace=True)
 
-    def do_indicator_exist(self, column_names: List[str]):
+    def do_indicator_exist(self, column_names: List[str]) -> bool:
 
         pass
 
-    def _check_signal(self, indicators: dict):
+    def _check_signal(self, indicators: dict) -> Union[pd.Series, None]:
         pass
 
