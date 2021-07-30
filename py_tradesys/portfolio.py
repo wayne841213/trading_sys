@@ -59,7 +59,7 @@ class Portfolio:
             return (False, "{Symbol} did not exist in the portfolio.".format(symbol=symbol))
 
     @property
-    def td_client(self) -> TDClient:
+    def td_client(self):
         """get the TDClient object for the portfolio
 
         Returns:
@@ -84,7 +84,7 @@ class Portfolio:
     def risk_exposure(self):
         pass
 
-    def in_portfolio(self, symbol: str) -> bool:
+    def in_portfolio(self, symbol: str):
 
         if symbol in self.positions:
             return True

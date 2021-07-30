@@ -45,7 +45,7 @@ class Indicators:
             return self._indicator_signals
 
     @property
-    def price_data_frame(self) -> pd.DataFrame:
+    def price_data_frame(self):
         return self._frame
 
     @price_data_frame.setter

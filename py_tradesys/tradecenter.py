@@ -21,7 +21,7 @@ class Tradecenter:
         credentials_path: str = None,
         trading_account: str = None,
         paper_trading: bool = True,
-    ) -> None:
+    ):
 
         self.trading_account: str = trading_account
         self.client_id: str = client_id
@@ -33,7 +33,7 @@ class Tradecenter:
         self.stock_frame = None
         self.paper_trading = paper_trading
 
-    def _create_session(self) -> TDClient:
+    def _create_session(self):
 
         td_client = TDClient(
             client_id=self.client_id,
@@ -48,7 +48,7 @@ class Tradecenter:
         return td_client
 
     @property
-    def pre_market_open(self) -> bool:
+    def pre_market_open(self):
 
         # whether the market open
 
@@ -66,7 +66,7 @@ class Tradecenter:
             return False
 
     @property
-    def post_market_open(self) -> bool:
+    def post_market_open(self):
 
         # holiday
         post_market_end_time = (
@@ -83,7 +83,7 @@ class Tradecenter:
             return False
 
     @property
-    def regular_market_open(self) -> bool:
+    def regular_market_open(self):
 
         market_start_time = (
             datetime.now().replace(hour=13, minute=30, second=00, tzinfo=timezone.utc).timestamp()
@@ -132,7 +132,7 @@ class Tradecenter:
         bar_size: int = 1,
         bar_type: str = "minute",
         symbol: Optional[List[str]] = None,
-    ) -> List[Dict]:
+    ):
 
         self.bar_size = bar_size
         self.bar_type = bar_type

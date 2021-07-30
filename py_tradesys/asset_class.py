@@ -17,7 +17,7 @@ class StockFrame:
         self._symbol_rolling_groups: RollingGroupby = None
 
     @property
-    def frame(self) -> pd.DataFrame:
+    def frame(self):
         return self._frame
 
     @property
@@ -28,7 +28,7 @@ class StockFrame:
         )
         return self._symbol_groups
 
-    def symbol_rolling_groups(self, size: int) -> RollingGroupby:
+    def symbol_rolling_groups(self, size: int):
 
         if not self._symbol_groups:
             self.symbol_groups
@@ -59,7 +59,7 @@ class StockFrame:
 
         return price_df
 
-    def add_rows(self, data: dict) -> None:
+    def add_rows(self, data: dict):
 
         column_names = ["open", "close", "high", "low", "volume"]
 
