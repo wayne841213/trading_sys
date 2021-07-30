@@ -86,3 +86,22 @@ else:
 
 current_quote = trade_system.grab_current_quotes()
 # pprint.pprint(current_quote)
+
+# define the date range
+
+end_data = datetime.today()
+start_date = end_data - timedelta(days=30)
+
+# grab the historical price
+
+historical_prices = trade_system.grab_historical_prices(
+    start=start_date, end=end_data, bar_size=1, bar_type="minute"
+)
+
+# convert the data into a stockfrome
+
+stock_frame = trade_system.create_stock_frame(data=historical_prices["aggregated"])
+
+# print the head
+
+pprint.pprint(stock_frame.frame.head(n=20))
