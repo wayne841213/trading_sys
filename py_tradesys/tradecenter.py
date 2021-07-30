@@ -111,7 +111,7 @@ class Tradecenter:
     def create_trade(self):
         pass
 
-    def grab_current_quotes(self) -> dict:
+    def grab_current_quotes(self):
         # grab all the quote in the portfolio
         symbols = self.portfolio.positions.keys()
 
@@ -120,7 +120,7 @@ class Tradecenter:
 
         return quotes
 
-    def create_stock_frame(self, data: List[dict]) -> StockFrame:
+    def create_stock_frame(self, data: List[dict]):
         self.stock_frame = StockFrame(data=data)
         return self.stock_frame
 
