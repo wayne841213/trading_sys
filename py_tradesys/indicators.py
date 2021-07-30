@@ -5,7 +5,7 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 import numpy as np
 import pandas as pd
 
-from asset_class import StockFrame
+from py_tradesys.asset import StockFrame
 
 
 class Indicators:

@@ -6,8 +6,8 @@ import pandas as pd
 from td.client import TDClient
 from td.utils import TDUtilities
 
-from asset_class import StockFrame
-from portfolio import Portfolio
+from py_tradesys.asset import StockFrame
+from py_tradesys.portfolio import Portfolio
 
 milliseconds_since_epoch = TDUtilities().milliseconds_since_epoch
 
