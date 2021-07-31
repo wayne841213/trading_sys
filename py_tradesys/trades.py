@@ -23,7 +23,7 @@ class Trades:
         self,
         trade_id: str,
         order_type: str,
-        side: str,
+        long_or_short: str,
         enter_or_exit: str,
         price: float = 0.00,
         stop_limit_price: float = 0.00,
@@ -51,7 +51,7 @@ class Trades:
             "duration": "DAY",
             "orderLegCollection": [
                 {
-                    "instruction": self.order_instructions[enter_or_exit][side],
+                    "instruction": self.order_instructions[enter_or_exit][long_or_short],
                     "quantity": 0,
                     "instrument": {"symbol": None, "assetType": None},
                 }
@@ -75,7 +75,7 @@ class Trades:
             self.order["stopType"] = "STANDARD"
 
         self.enter_or_exit = enter_or_exit
-        self.side = side
+        self.side = long_or_short
         self.order_types = order_type
         self.price = price
 
