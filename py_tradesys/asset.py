@@ -11,7 +11,7 @@ from pandas.core.window import RollingGroupby
 class StockFrame:
     def __init__(self, data: List[Dict]) -> None:
 
-        self._data = data  # self.data?
+        self._data = data
         self._frame: pd.DataFrame = self.create_frame()
         self._symbol_groups: DataFrameGroupBy = None
         self._symbol_rolling_groups: RollingGroupby = None
@@ -63,36 +63,43 @@ class StockFrame:
 
         column_names = ["open", "close", "high", "low", "volume"]
 
-        for symbol in data:
+        for quote in data:
 
-            # parse the timestamp
-            time_stamp = pd.to_datetime(data[symbol]["quoteTimeInLong"], unit="ms", origin="unix")
+            # Parse the Timestamp.
+            time_stamp = pd.to_datetime(quote["datetime"], unit="ms", origin="unix")
 
-            # define the multi index
-            row_id = (symbol, time_stamp)
+            # Define the Index Tuple.
+            row_id = (quote["symbol"], time_stamp)
 
-            # define value -> it's a list
-            # column that what we want to adding
-
+            # Define the values.
             row_values = [
-                data[symbol]["openPrice"],
-                data[symbol]["closePrice"],
-                data[symbol]["highPrice"],
-                data[symbol]["lowPrice"],
-                data[symbol]["askPrice"] + data[symbol]["bidPrice"],
+                quote["open"],
+                quote["close"],
+                quote["high"],
+                quote["low"],
+                quote["volume"],
             ]
 
-            # new row add it and sort it
-
+            # Create a new row.
             new_row = pd.Series(data=row_values)
 
+            # Add the row.
             self.frame.loc[row_id, column_names] = new_row.values
+
             self.frame.sort_index(inplace=True)
 
     def do_indicator_exist(self, column_names: List[str]) -> bool:
 
-        pass
+        if set(column_names).issubset(self._frame.columns):
+            return True
+        else:
+            return (
+                "The following indicator columns are missing from the StockFrame: {missing_columns}"
+            ).format(missing_columns=set(column_names).difference(self._frame.columns))
 
     def _check_signal(self, indicators: dict) -> Union[pd.Series, None]:
-        pass
+
+        signals_df = self.stock_frame._check_signals(indicators=self._indicators_signals)
+
+        return signals_df
 

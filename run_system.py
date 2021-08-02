@@ -137,3 +137,40 @@ new_trade.instrument(symbol="MSFT", quantity=2, asset_type="EQUITY")
 new_trade.add_stop_loss(stop_size=0.10, percentage=False)
 
 pprint.pprint(new_trade.order)
+
+# create a new indicator client
+
+indicator_client = Indicators(price_data_frame=stock_frame)
+
+# add the RSI
+indicator_client.rsi(period=14)
+
+indicator_client.sma(period=200)
+
+indicator_client.ema(period=50)
+
+# add the signal to check for it
+
+indicator_client.set_indicator_signals(
+    indicator="rsi", buy=40.0, sell=20.0, condition_buy=operator.ge, condition_sell=operator.le
+)
+
+# define a trade dict
+
+trade_dict = {
+    "MSFT": {
+        "trade_func": trade_system.trades["long_msft"],
+        "trade_id": trade_system.trades["long_msft"].trade_id,
+    }
+}
+
+while True:
+
+    # grab the latest bar
+    latest_bars = trade_system.get_latest_bar()
+
+    # add those bar to the stockframe
+    stock_frame.add_rows(data=latest_bars)
+
+    # refresh indicator
+    indicator_client.refresh()
